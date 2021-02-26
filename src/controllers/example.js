@@ -61,7 +61,12 @@ const example = {
     },
     update: (req, res) => {
         try {
-            exampleModels.update(req.body, req.params.id)
+            const body = {
+                name: req.body.name,
+                absent: req.body.absent,
+                updatedAt: Date.now()
+            }
+            exampleModels.update(body, req.params.id)
                 .then((result) => {
                     success(res, 200, result.rows, 'ok')
                 })
