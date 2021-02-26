@@ -7,7 +7,7 @@ const example = {
         try {
             exampleModels.getAll()
                 .then((result) => {
-                    success(res, 200, result, 'ok')
+                    success(res, 200, result.rows, 'ok')
                 })
                 .catch((err) => {
                     failed(res, 500, [], err.message)
@@ -20,7 +20,7 @@ const example = {
         try {
             exampleModels.getById(req.params.id)
                 .then((result) => {
-                    success(res, 200, result, 'ok')
+                    success(res, 200, result.rows, 'ok')
                 })
                 .catch((err) => {
                     failed(res, 404, [], err.message)
@@ -33,10 +33,10 @@ const example = {
         try {
             exampleModels.getByAbsent(req.params.absent)
                 .then((result) => {
-                    if (result.length == 0) {
+                    if (result.rows.length == 0) {
                         failed(res, 404, [], 'murid dengan absent ' + req.params.absent + ' tidak ada') 
                     } else {
-                        success(res, 200, result, 'ok')
+                        success(res, 200, result.rows, 'ok')
                     }
                 })
                 .catch((err) => {
@@ -50,7 +50,7 @@ const example = {
         try {
             exampleModels.create(req.body)
                 .then((result) => {
-                    success(res, 201, result, 'ok')
+                    success(res, 201, result.rows, 'ok')
                 })
                 .catch((err) => {
                     failed(res, 400, [], err.message)
@@ -63,7 +63,7 @@ const example = {
         try {
             exampleModels.update(req.body, req.params.id)
                 .then((result) => {
-                    success(res, 200, result, 'ok')
+                    success(res, 200, result.rows, 'ok')
                 })
                 .catch((err) => {
                     failed(res, 400, [], err.message)
@@ -76,7 +76,7 @@ const example = {
         try {
             exampleModels.delete(req.params.id)
                 .then((result) => {
-                    success(res, 200, result, 'ok')
+                    success(res, 200, result.rows, 'ok')
                 })
                 .catch((err) => {
                     failed(res, 500, [], err.message)

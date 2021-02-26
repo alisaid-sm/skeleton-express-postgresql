@@ -14,7 +14,7 @@ const example = {
     },
     getById: (id) => {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM example WHERE id=?', id, (err, result) => {
+            db.query('SELECT * FROM example WHERE id=$1', [id], (err, result) => {
                 if (err) {
                     reject(new Error(err));
                 } else {
@@ -25,7 +25,7 @@ const example = {
     },
     getByAbsent: (absent) => {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM example WHERE absen=?', absent, (err, result) => {
+            db.query(`SELECT * FROM example WHERE absent=${absent}`, (err, result) => {
                 if (err) {
                     reject(new Error(err));
                 } else {
@@ -36,7 +36,7 @@ const example = {
     },
     create: (data) => {
         return new Promise((resolve, reject) => {
-            db.query(`INSERT INTO example (nama, absen) VALUES ('${data.nama}', '${data.absen}')`, (err, result) => {
+            db.query(`INSERT INTO example (name, absent) VALUES ('${data.name}', '${data.absent}')`, (err, result) => {
                 if (err) {
                     reject(new Error(err));
                 } else {
@@ -47,7 +47,7 @@ const example = {
     },
     update: (data, id) => {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE example SET ? WHERE id= ?', [data, id], (err, result) => {
+            db.query(`UPDATE example SET name='${data.name}', absent='${data.absent}' WHERE id=$1`, [id], (err, result) => {
                 if (err) {
                     reject(new Error(err));
                 } else {
@@ -58,7 +58,7 @@ const example = {
     },
     delete: (id) => {
         return new Promise((resolve, reject) => {
-            db.query('DELETE FROM example WHERE id=?', id, (err, result) => {
+            db.query(`DELETE FROM example WHERE id=${id}`, (err, result) => {
                 if (err) {
                     reject(new Error(err));
                 } else {

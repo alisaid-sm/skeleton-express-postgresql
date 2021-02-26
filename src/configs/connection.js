@@ -1,16 +1,17 @@
 // This is connection Databases
 
-const mysql = require('mysql2')
+const { Client } = require('pg')
 
-const { DB_HOST, DB_NAME, DB_PASS, DB_USER } = require('../helpers/env')
+const { DB_HOST, DB_NAME, DB_PASS, DB_USER, DB_PORT } = require('../helpers/env')
 
-const db = mysql.createConnection({
-    host: DB_HOST,
+const db = new Client({
     user: DB_USER,
-    password: DB_PASS,
+    host: DB_HOST,
     database: DB_NAME,
-    dateStrings: 'date'
-});
+    password: DB_PASS,
+    port: DB_PORT,
+  })
+db.connect()
 
 module.exports = db
 
