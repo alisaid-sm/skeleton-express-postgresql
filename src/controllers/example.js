@@ -61,10 +61,11 @@ const example = {
     },
     update: (req, res) => {
         try {
+            const today = new Date(Date.now())
             const body = {
                 name: req.body.name,
                 absent: req.body.absent,
-                updatedAt: Date.now()
+                updatedAt: today.toISOString()
             }
             exampleModels.update(body, req.params.id)
                 .then((result) => {
