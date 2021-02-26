@@ -47,7 +47,7 @@ const example = {
     },
     update: (data, id) => {
         return new Promise((resolve, reject) => {
-            db.query(`UPDATE example SET name='${data.name}', absent='${data.absent}', updatedAt='${data.updatedAt}' WHERE id=$1`, [id], (err, result) => {
+            db.query(`UPDATE example SET name='${data.name}', absent='${data.absent}', updated-at='${data.updatedAt}' WHERE id=$1`, [id], (err, result) => {
                 if (err) {
                     reject(new Error(err));
                 } else {
