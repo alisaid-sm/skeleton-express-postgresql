@@ -1,12 +1,15 @@
 const exampleModels = require('../models/example')
 const upload = require('../helpers/upload')
 const { success, failed } = require('../helpers/response')
+const redis = require('redis')
+const client = redis.createClient()
 
 const example = {
     getAll: (req, res) => {
         try {
             exampleModels.getAll()
                 .then((result) => {
+                    client.set('example', JSON.stringify(result.rows))
                     success(res, 200, result.rows, 'ok')
                 })
                 .catch((err) => {
@@ -50,7 +53,12 @@ const example = {
         try {
             exampleModels.create(req.body)
                 .then((result) => {
+                    client.del('example')
                     success(res, 201, result.rows, 'ok')
+                    exampleModels.getAll()
+                        .then((result) => {
+                            client.set('example', JSON.stringify(result.rows))
+                        })
                 })
                 .catch((err) => {
                     failed(res, 400, [], err.message)
@@ -69,7 +77,12 @@ const example = {
             }
             exampleModels.update(body, req.params.id)
                 .then((result) => {
+                    client.del('example')
                     success(res, 200, result.rows, 'ok')
+                    exampleModels.getAll()
+                        .then((result) => {
+                            client.set('example', JSON.stringify(result.rows))
+                        })
                 })
                 .catch((err) => {
                     failed(res, 400, [], err.message)
@@ -82,7 +95,12 @@ const example = {
         try {
             exampleModels.delete(req.params.id)
                 .then((result) => {
+                    client.del('example')
                     success(res, 200, result.rows, 'ok')
+                    exampleModels.getAll()
+                        .then((result) => {
+                            client.set('example', JSON.stringify(result.rows))
+                        })
                 })
                 .catch((err) => {
                     failed(res, 500, [], err.message)

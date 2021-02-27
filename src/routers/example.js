@@ -1,10 +1,11 @@
 const express = require('express')
 const exampleController = require('../controllers/example')
 const { authentication, authorization } = require('../helpers/auth')
+const redis = require('../helpers/redis')
 
 const router = express.Router()
 
-router.get('/example', exampleController.getAll)
+router.get('/example', redis.getAll, exampleController.getAll)
 router.get('/example/:id', exampleController.getById)
 router.get('/example/absent/:absent', exampleController.getByAbsent)
 router.post('/example', exampleController.create)
